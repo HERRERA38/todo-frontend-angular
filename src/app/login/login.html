@@ -12,10 +12,9 @@
       <input id="password" type="password" formControlName="password" />
     </div>
 
-    @if (errorMensaje) {
-      <p class="error">{{ errorMensaje }}</p>
+    @if (errorMensaje()) {
+      <p class="error">{{ errorMensaje() }}</p>
     }
-
     <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
   </form>
 

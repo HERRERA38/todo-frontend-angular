@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../services/auth';
@@ -11,7 +11,7 @@ import { Auth } from '../services/auth';
 })
 export class Login {
   loginForm: FormGroup;
-  errorMensaje: string = '';
+  errorMensaje = signal('');
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +36,7 @@ export class Login {
         this.router.navigate(['/tareas']);
       },
       error: () => {
-        this.errorMensaje = 'Usuario o contraseña incorrectos';
+        this.errorMensaje.set('Usuario o contraseña incorrectos');
       },
     });
   }
