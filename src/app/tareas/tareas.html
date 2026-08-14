@@ -1,1 +1,16 @@
-<p>tareas works!</p>
+<div class="tareas-container">
+  <h2>Mis tareas</h2>
+
+  @if (tareas().length === 0) {
+    <p>No tienes tareas todavía.</p>
+  } @else {
+    <ul>
+      @for (tarea of tareas(); track tarea.id) {
+        <li>
+          <strong>{{ tarea.nombre }}</strong> —
+          {{ tarea.completada ? 'Completada' : 'Pendiente' }}
+        </li>
+      }
+    </ul>
+  }
+</div>

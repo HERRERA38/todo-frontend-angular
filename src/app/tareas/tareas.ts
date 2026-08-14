@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { TareaService, Tarea } from '../services/tarea';
 
 @Component({
   selector: 'app-tareas',
@@ -6,4 +7,19 @@ import { Component } from '@angular/core';
   templateUrl: './tareas.html',
   styleUrl: './tareas.css',
 })
-export class Tareas {}
+export class Tareas implements OnInit {
+  tareas = signal<Tarea[]>([]);
+
+  constructor(private tareaService: TareaService) {}
+
+  ngOnInit(): void {
+    this.tareaService.listar().subscribe({
+      next: (data) => {
+        this.tareas.set(data);
+      },
+      error: (err) => {
+        console.error('Error al cargar tareas:', err);
+      },
+    });
+  }
+}
