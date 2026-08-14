@@ -1,6 +1,39 @@
 <div class="tareas-container">
   <h2>Mis tareas</h2>
 
+  <button (click)="abrirFormularioCrear()">+ Nueva tarea</button>
+
+  @if (mostrarFormulario()) {
+    <form [formGroup]="tareaForm" (ngSubmit)="onSubmit()" class="tarea-form">
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" type="text" formControlName="nombre" />
+      </div>
+
+      <div class="campo">
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" formControlName="descripcion"></textarea>
+      </div>
+
+      <div class="campo">
+        <label for="fecha_caducidad">Fecha de caducidad</label>
+        <input id="fecha_caducidad" type="date" formControlName="fecha_caducidad" />
+      </div>
+
+      <div class="campo campo-checkbox">
+        <label for="completada">
+          <input id="completada" type="checkbox" formControlName="completada" />
+          Completada
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="tareaForm.invalid">
+        {{ tareaEditando() === null ? 'Crear tarea' : 'Guardar cambios' }}
+      </button>
+      <button type="button" (click)="cancelar()">Cancelar</button>
+    </form>
+  }
+
   @if (tareas().length === 0) {
     <p>No tienes tareas todavía.</p>
   } @else {
@@ -9,6 +42,8 @@
         <li>
           <strong>{{ tarea.nombre }}</strong> —
           {{ tarea.completada ? 'Completada' : 'Pendiente' }}
+          <button (click)="abrirFormularioEditar(tarea)">Editar</button>
+          <button (click)="eliminarTarea(tarea.id)">Eliminar</button>
         </li>
       }
     </ul>
